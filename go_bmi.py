@@ -14,7 +14,6 @@ import time
 import io
 import joblib
 import pandas as pd
-import threading
 import av
 
 #def pearson_corr(y_test, y_pred):
@@ -28,7 +27,7 @@ import av
 #   model = load_model('My_model_vgg16.h5')
 
 #model = load_model('/content/gdrive/MyDrive/Colab Notebooks/My_BMI/My_model_vgg16.h5', compile=False)
-faceCascade = cv2.CascadeClassifier('/content/gdrive/MyDrive/Colab Notebooks/My_BMI/haarcascade_frontalface_default.xml')
+faceCascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 
 # def predict_class(image, model):
 #   img = image.copy()
@@ -78,7 +77,7 @@ def change_photo_state():
 
 
 def load_svr():
-    return joblib.load('/content/gdrive/MyDrive/Colab Notebooks/My_BMI/svr_model.pkl')
+    return joblib.load('svr_model.pkl')
 
 
 def load_vggface():
