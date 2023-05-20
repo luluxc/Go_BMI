@@ -27,7 +27,7 @@ import av
 # with custom_object_scope({'pearson_corr': pearson_corr}):
 #   model = load_model('My_model_vgg16.h5')
 
-model = load_model('/content/gdrive/MyDrive/Colab Notebooks/My_BMI/My_model_vgg16.h5', compile=False)
+#model = load_model('/content/gdrive/MyDrive/Colab Notebooks/My_BMI/My_model_vgg16.h5', compile=False)
 faceCascade = cv2.CascadeClassifier('/content/gdrive/MyDrive/Colab Notebooks/My_BMI/haarcascade_frontalface_default.xml')
 
 # def predict_class(image, model):
@@ -106,7 +106,7 @@ def predict_bmi(frame):
         features = get_fc6_feature(img)
         preds = svr_model.predict(features)
         pred_bmi.append(preds[0])
-        cv2.putText(frame, f'BMI: {preds}', (x+5, y-5), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
+        cv2.putText(frame, f'BMI: {preds - 4}', (x+5, y-5), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
     return pred_bmi, frame
 
 def prepare_download(img):
