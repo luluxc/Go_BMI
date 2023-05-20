@@ -79,17 +79,18 @@ faceCascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 #         cv2.putText(frame, f'BMI: {preds}', (x+5, y-5), cv2.FONT_HERSHEY_SIMPLEX, 2, (255, 255, 255), 2)
 #     return pred_bmi
 
+@st.cache_data
 def calculator(height, weight):
   return 730 * weight / height**2
   
 def change_photo_state():
   st.session_state['photo'] = 'Done'
 
-
+@st.cache_resource(show_spinner=False)
 def load_svr():
     return joblib.load('svr_model.pkl')
 
-
+@st.cache_resource(show_spinner=False)
 def load_vggface():
     vggface = VGGFace(model='vgg16', include_top=True, input_shape=(224, 224, 3), pooling='avg')
     return Model(inputs=vggface.input, outputs=vggface.get_layer('fc6').output)
@@ -97,6 +98,7 @@ def load_vggface():
 svr_model = load_svr()
 vggface_model = load_vggface()
 
+@st.cache_resource(show_spinner=False)
 def get_fc6_feature(img):
     img = np.expand_dims(img, axis=0)
     img = preprocess_input(img, version=2) 
@@ -118,6 +120,7 @@ def predict_bmi(frame):
         cv2.putText(frame, f'BMI: {preds - 4}', (x+5, y-5), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
     return pred_bmi, frame
 
+  @st.cache_data
 def prepare_download(img):
     buf = io.BytesIO()
     img.save(buf, format='PNG')
