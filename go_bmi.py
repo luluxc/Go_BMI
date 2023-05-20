@@ -118,8 +118,7 @@ def predict_bmi(frame):
         pred_bmi.append(preds[0])
         cv2.putText(frame, f'BMI: {preds - 4}', (x+5, y-5), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
     return pred_bmi, frame
-
-@st.cache_data
+ 
 def prepare_download(img):
     buf = io.BytesIO()
     img.save(buf, format='PNG')
