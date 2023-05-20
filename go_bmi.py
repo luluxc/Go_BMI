@@ -1,3 +1,7 @@
+filename = '/home/appuser/venv/lib/python3.9/site-packages/keras_vggface/models.py'
+text = open(filename).read()
+open(filename, 'w+').write(text.replace('keras.engine.topology', 'tensorflow.keras.utils'))
+
 import streamlit as st
 from streamlit_webrtc import webrtc_streamer
 import cv2
@@ -133,7 +137,7 @@ def main():
   if 'photo' not in st.session_state:
     st.session_state['photo'] = 'Not done'
 
-  st.set_page_config(layout="centered", page_icon='random', )
+  st.set_page_config(layout="wide", page_icon='random', )
   st.markdown("""
   <style>
   .big-font {
@@ -143,8 +147,8 @@ def main():
   """, unsafe_allow_html=True)
 
   st.markdown('<p class="big-font">BMI Prediction 📸</p>', unsafe_allow_html=True)
-  #bmi_img = Image.open('bmi.jpeg')
-  #st.image(bmi_img)
+  bmi_img = Image.open('bmi.jpeg')
+  st.image(bmi_img)
   #st.title('*BMI prediction 📸*')
   st.write('Body Mass Index(BMI) estimates the total body fat and assesses the risks for diseases related to increase body fat. A higher BMI may indicate higher risk of developing many diseases.')
   st.write('*Since we only have the access to your face feature, the estimated value is biased')
@@ -167,7 +171,7 @@ def main():
       file_image = np.array(Image.open(file_image))
       pred_camera = predict_bmi(file_image)
       ready_cam = Image.fromarray(file_image)
-      col2.image(ready_cam, use_column_width='auto', clamp=True)
+      col2.image(ready_cam, clamp=True)
       # Convert the PIL Image to bytes
       download_cam = prepare_download(ready_cam)
       col3.divider()
@@ -186,7 +190,7 @@ def main():
       upload_img = np.array(Image.open(upload_img).convert('RGB'))
       pred_upload = predict_bmi(upload_img)
       ready_upload = Image.fromarray(upload_img)
-      col2.image(ready_upload, use_column_width='auto', clamp=True)
+      col2.image(ready_upload, clamp=True)
       # Convert the PIL Image to bytes
       download_img = prepare_download(ready_upload)
       col3.write('Download the predicted image if you want!')
