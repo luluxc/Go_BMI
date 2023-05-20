@@ -6,8 +6,8 @@ from twilio.rest import Client
 
 logger = logging.getLogger(__name__)
 
-os.environ["TWILIO_ACCOUNT_SID"] = "ACeb1147603b65cd70ccdedda1905fed87"
-os.environ["TWILIO_AUTH_TOKEN"] = "6159443b8b9e22d096b46113e240e10e"
+os.environ["TWILIO_ACCOUNT_SID"] = "ACd01b2689b38f000027e44133cb446ba6"
+os.environ["TWILIO_AUTH_TOKEN"] = "d4b368499a63aaf979cd9f7978879ed5"
 
 
 @st.cache_data
