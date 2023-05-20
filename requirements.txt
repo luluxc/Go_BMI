@@ -8,3 +8,5 @@ keras_vggface
 tensorflow_probability==0.13.0
 tensorflow==2.7.0
 pandas
+av
+joblib
