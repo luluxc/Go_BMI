@@ -78,7 +78,7 @@ faceCascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 #         pred_bmi.append(preds[0])
 #         cv2.putText(frame, f'BMI: {preds}', (x+5, y-5), cv2.FONT_HERSHEY_SIMPLEX, 2, (255, 255, 255), 2)
 #     return pred_bmi
-
+@st.cache_data
 def calculator(height, weight):
   return 730 * weight / height**2
   
@@ -119,7 +119,7 @@ def predict_bmi(frame):
         cv2.putText(frame, f'BMI: {preds - 4}', (x+5, y-5), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
     return pred_bmi, frame
 
-  @st.cache_data
+@st.cache_data
 def prepare_download(img):
     buf = io.BytesIO()
     img.save(buf, format='PNG')
