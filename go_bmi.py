@@ -21,29 +21,8 @@ import pandas as pd
 import av
 import logging
 import os
-from twilio.rest import Client
+from turn import get_ice_servers
 
-logger = logging.getLogger(__name__)
-
-os.environ["TWILIO_ACCOUNT_SID"] = "ACd01b2689b38f000027e44133cb446ba6"
-os.environ["TWILIO_AUTH_TOKEN"] = "654a358bcbb4b8a54cb81f035a913c66"
-
-
-def get_ice_servers():
-    try:
-        account_sid = os.environ["TWILIO_ACCOUNT_SID"]
-        auth_token = os.environ["TWILIO_AUTH_TOKEN"]
-    except KeyError:
-        logger.warning(
-            "Twilio credentials are not set. Fallback to a free STUN server from Google."  # noqa: E501
-        )
-        return [{"urls": ["stun:stun.l.google.com:19302"]}]
-
-    client = Client(account_sid, auth_token)
-
-    token = client.tokens.create()
-
-    return token.ice_servers
 
 #def pearson_corr(y_test, y_pred):
 #  corr = tfp.stats.correlation(y_test, y_pred)
