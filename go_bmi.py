@@ -89,12 +89,13 @@ def change_photo_state():
 def load_svr():
     return joblib.load('svr_model.pkl')
 
+svr_model = load_svr()
+  
 @st.cache_resource(show_spinner=False)
 def load_vggface():
     vggface = VGGFace(model='vgg16', include_top=True, input_shape=(224, 224, 3), pooling='avg')
     return Model(inputs=vggface.input, outputs=vggface.get_layer('fc6').output)
 
-svr_model = load_svr()
 vggface_model = load_vggface()
 
 @st.cache_resource(show_spinner=False)
@@ -116,7 +117,7 @@ def predict_bmi(frame):
         features = get_fc6_feature(img)
         preds = svr_model.predict(features)
         pred_bmi.append(preds[0])
-        cv2.putText(frame, f'BMI: {preds - 4}', (x+5, y-5), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
+        cv2.putText(frame, f'BMI: {preds}', (x+5, y-5), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
     return pred_bmi, frame
  
 def prepare_download(img):
@@ -144,7 +145,7 @@ def main():
   if 'photo' not in st.session_state:
     st.session_state['photo'] = 'Not done'
 
-  st.set_page_config(layout="wide", page_icon='random', )
+  st.set_page_config(layout="centered", page_icon='random', )
   st.markdown("""
   <style>
   .big-font {
