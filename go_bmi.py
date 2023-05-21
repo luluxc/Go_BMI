@@ -39,45 +39,6 @@ from typing import Union
 #model = load_model('/content/gdrive/MyDrive/Colab Notebooks/My_BMI/My_model_vgg16.h5', compile=False)
 faceCascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 
-# def predict_class(image, model):
-#   img = image.copy()
-#   img = cv2.resize(img, (224, 224))
-#   img = np.array(img).astype(np.float32)
-#   img = np.expand_dims(img, axis = 0)
-#   img = preprocess_input(img, version=2)
-#   prediction = model.predict(img)[0][0]
-#   return prediction
-
-
-
-# def process_img(file_image):
-#   image = Image.open(file_image)
-#   image = np.array(image)
-#   gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-#   faces = faceCascade.detectMultiScale(gray_image, scaleFactor=1.15, minNeighbors=5, minSize=(30, 30))
-#   if len(faces) == 0:
-#     col2.write('No face detected! Please take it again.')
-#   for (x, y, w, h) in faces:
-#     # box bounding the face
-#     cv2.rectangle(image, (x, y), (x+w, y+h), (255, 0, 0), 2)
-#     bmi = predict_class(image[y:y+h, x:x+w], model)
-#     cv2.putText(image, f'BMI:{bmi}', (x+5, y-5), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
-#   return 
-
-# def predict_bmi(frame):
-#     pred_bmi = []
-#     faces = faceCascade.detectMultiScale(cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY),scaleFactor = 1.15,minNeighbors = 5,minSize = (30,30),)
-#     for (x, y, w, h) in faces:
-#         cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 0, 255), 2)
-#         image = frame[y:y+h, x:x+w]
-#         img = image.copy()
-#         img = cv2.resize(img, (224, 224))
-#         img = np.array(img).astype(np.float64)
-#         features = get_fc6_feature(img)
-#         preds = svr_model.predict(features)
-#         pred_bmi.append(preds[0])
-#         cv2.putText(frame, f'BMI: {preds}', (x+5, y-5), cv2.FONT_HERSHEY_SIMPLEX, 2, (255, 255, 255), 2)
-#     return pred_bmi
 @st.cache_data
 def calculator(height, weight):
   return 730 * weight / height**2
@@ -101,7 +62,7 @@ vggface_model = load_vggface()
 @st.cache_resource(show_spinner=False)
 def get_fc6_feature(img):
     img = np.expand_dims(img, axis=0)
-    img = preprocess_input(img, version=2) 
+    img = preprocess_input(img, version=1) 
     fc6_feature = vggface_model.predict(img)
     return fc6_feature
 
@@ -142,6 +103,7 @@ class VideoProcessor:
         return av.VideoFrame.from_ndarray(frame_with_bmi, format='bgr24') 
 
 def main():
+  st.ballons()
   if 'photo' not in st.session_state:
     st.session_state['photo'] = 'Not done'
 
@@ -179,12 +141,14 @@ def main():
       col2.success('Taken the photo sucessfully!')
       file_image = np.array(Image.open(file_image))
       pred_camera = predict_bmi(file_image)
+      if len(pred_camera) == 0:
+        col2.markdown('No face detected, please take a photo again.')
       ready_cam = Image.fromarray(file_image)
       col2.image(ready_cam, clamp=True)
       # Convert the PIL Image to bytes
       download_cam = prepare_download(ready_cam)
       col3.divider()
-      col3.write('Download the predicted image if you want!')
+      col3.write('Download the predicted image if you want!👇')
       download_img = col3.download_button(
         label=':black[Download image]', 
         data=download_cam,
@@ -198,6 +162,8 @@ def main():
       col3.success('Uploaded the photo sucessfully!')
       upload_img = np.array(Image.open(upload_img).convert('RGB'))
       pred_upload = predict_bmi(upload_img)
+      if len(pred_upload) == 0:
+        col2.markdown('No face detected, please upload a photo again.')
       ready_upload = Image.fromarray(upload_img)
       col2.image(ready_upload, clamp=True)
       # Convert the PIL Image to bytes
