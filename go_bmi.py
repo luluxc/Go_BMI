@@ -105,7 +105,6 @@ class VideoProcessor:
 def main():
   if 'photo' not in st.session_state:
     st.session_state['photo'] = 'Not done'
-  st.balloons()
   st.set_page_config(layout="centered", page_icon='random')
   st.markdown("""
   <style>
@@ -114,7 +113,7 @@ def main():
   }
   </style>
   """, unsafe_allow_html=True)
-
+  st.balloons()
   st.markdown('<p class="big-font">BMI Prediction 📸</p>', unsafe_allow_html=True)
   bmi_img = Image.open('bmi.jpeg')
   st.image(bmi_img)
