@@ -54,15 +54,15 @@ svr_model = load_svr()
   
 @st.cache_resource(show_spinner=False)
 def load_vggface():
-    vggface = VGGFace(model='vgg16', include_top=True, input_shape=(224, 224, 3), pooling='avg')
-    return Model(inputs=vggface.input, outputs=vggface.get_layer('fc6').output)
+    vggface = VGGFace(model='resnet50', include_top=True, input_shape=(224, 224, 3), pooling='avg')
+    return Model(inputs=vggface.input, outputs=vggface.get_layer('avg_pool').output)
 
 vggface_model = load_vggface()
 
 @st.cache_resource(show_spinner=False)
-def get_fc6_feature(img):
+def get_resnet_feature(img):
     img = np.expand_dims(img, axis=0)
-    img = preprocess_input(img, version=1) 
+    img = preprocess_input(img, version=2) 
     fc6_feature = vggface_model.predict(img)
     return fc6_feature
 
@@ -75,7 +75,7 @@ def predict_bmi(frame):
         img = image.copy()
         img = cv2.resize(img, (224, 224))
         img = np.array(img).astype(np.float64)
-        features = get_fc6_feature(img)
+        features = get_resnet_feature(img)
         preds = svr_model.predict(features)
         pred_bmi.append(preds[0])
         cv2.putText(frame, f'BMI: {preds}', (x+5, y-5), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
