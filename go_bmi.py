@@ -161,7 +161,7 @@ def main():
   st.write('Body Mass Index(BMI) estimates the total body fat and assesses the risks for diseases related to increase body fat. A higher BMI may indicate higher risk of developing many diseases.')
   st.write('*Since we only have the access to your face feature, the estimated value is biased')
   
-  st.text('Try this live BMI predictora😄')
+  st.text('Try this live BMI predictor😄')
   webrtc_streamer(key="example",video_transformer_factory=VideoProcessor,rtc_configuration={'iceServers': get_ice_servers()},sendback_audio=False)
   
   col2, col3 = st.columns([2,1])
@@ -210,12 +210,12 @@ def main():
         mime="image/png")
   
   expander_col2 = col2.expander('What are the health consequences of having a high or low BMI?')
-  expander_col2.write('''Obesity carries significant health hazards, whereas maintaining a healthy weight is a preventative measure against illnesses and cardiovascular difficulties. People with a BMI of more than 30 are more likely to have problems such as:
-                         *hypertension
-                         *diabetes type 2
-                         *coronary artery disease (CAD)
-                         *Arthritis, certain forms of cancer, and respiratory issues
-                         Even a healthy BMI isn’t a guarantee of good health. Malnutrition, osteoporosis, anemia, and a range of other issues can develop from nutrient insufficiency in those with a BMI below 18.5. Low BMI could indicate hormonal, intestinal, or other issues.''')
+  expander_col2.write('Obesity carries significant health hazards, whereas maintaining a healthy weight is a preventative measure against illnesses and cardiovascular difficulties. People with a BMI of more than 30 are more likely to have problems such as:')
+  expander_col2.write('                       *hypertension')
+  expander_col2.write('                       *diabetes type 2')
+  expander_col2.write('                       *coronary artery disease (CAD)')
+  expander_col2.write('                       *Arthritis, certain forms of cancer, and respiratory issues')
+  expander_col2.write('Even a healthy BMI isn’t a guarantee of good health. Malnutrition, osteoporosis, anemia, and a range of other issues can develop from nutrient insufficiency in those with a BMI below 18.5. Low BMI could indicate hormonal, intestinal, or other issues.')
   
   index = {'BMI':['16 ~ 18.5', '18.5 ~ 25', '25 ~ 30', '30 ~ 35', '35 ~ 40', '40~'],
            'WEIGHT STATUS':['Underweight', 'Normal', 'Overweight', 'Moderately obese', 'Severely obese', 'Very severely obese']}
@@ -227,8 +227,8 @@ def main():
   col3.markdown(hide_table_row_index, unsafe_allow_html=True)
   col3.table(df)
   expander = col3.expander('BMI Index')
-  expander.write('The table above shows the standard weight status categories based on BMI for people ages 20 and older. (Note: This is just the reference, please consult professionals for more health advices.)')
-  
+  expander.write('The table above shows the standard weight status categories based on BMI for people ages 20 and older.')
+  expander.write('(Note: This is just the reference, please consult professionals for more health advices.)')
   
   col3.title('BMI calculator')
   cal = col3.container()
