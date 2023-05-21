@@ -103,11 +103,10 @@ class VideoProcessor:
         return av.VideoFrame.from_ndarray(frame_with_bmi, format='bgr24') 
 
 def main():
-  st.balloons()
   if 'photo' not in st.session_state:
     st.session_state['photo'] = 'Not done'
-
-  st.set_page_config(layout="centered", page_icon='random', )
+  st.balloons()
+  st.set_page_config(layout="centered", page_icon='random')
   st.markdown("""
   <style>
   .big-font {
