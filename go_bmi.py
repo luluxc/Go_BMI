@@ -161,7 +161,7 @@ def main():
   st.write('Body Mass Index(BMI) estimates the total body fat and assesses the risks for diseases related to increase body fat. A higher BMI may indicate higher risk of developing many diseases.')
   st.write('*Since we only have the access to your face feature, the estimated value is biased')
   
-  st.text('Try this live BMI predictor😊‘）
+  st.text('Try this live BMI predictor😊'）
   webrtc_streamer(key="example",video_transformer_factory=VideoProcessor,rtc_configuration={'iceServers': get_ice_servers()},sendback_audio=False)
   
   col2, col3 = st.columns([2,1])
