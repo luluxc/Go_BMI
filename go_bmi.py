@@ -54,7 +54,7 @@ svr_model = load_svr()
   
 @st.cache_resource(show_spinner=False)
 def load_vggface():
-    vggface = VGGFace(model='resnet50', include_top=True, input_shape=(224, 224, 3), pooling='avg')
+    vggface = VGGFace(model='resnet50', include_top=False, input_shape=(224, 224, 3), pooling='avg')
     return vggface
 
 vggface_model = load_vggface()
