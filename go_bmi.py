@@ -76,7 +76,8 @@ def predict_bmi(frame):
         img = cv2.resize(img, (224, 224))
         img = np.array(img).astype(np.float64)
         features = get_resnet_feature(img)
-        preds = svr_model.predict(features)
+        flat_feature = np.reshape(features, (features.shape[0], features.shape[-1]))
+        preds = svr_model.predict(flat_feature)
         pred_bmi.append(preds[0])
         cv2.putText(frame, f'BMI: {preds}', (x+5, y-5), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
     return pred_bmi, frame
