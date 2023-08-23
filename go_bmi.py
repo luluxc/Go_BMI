@@ -1,3 +1,5 @@
+import os
+
 filename = '/home/appuser/venv/lib/python3.9/site-packages/keras_vggface/models.py'
 text = open(filename).read()
 open(filename, 'w+').write(text.replace('keras.engine.topology', 'tensorflow.keras.utils'))
@@ -20,7 +22,6 @@ import joblib
 import pandas as pd
 import av
 import logging
-import os
 from turn import get_ice_servers
 import threading
 from typing import Union
