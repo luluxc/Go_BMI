@@ -1,5 +1,3 @@
-import os
-
 filename = '/home/appuser/venv/lib/python3.9/site-packages/keras_vggface/models.py'
 text = open(filename).read()
 open(filename, 'w+').write(text.replace('keras.engine.topology', 'tensorflow.keras.utils'))
@@ -18,6 +16,7 @@ from keras_vggface.utils import preprocess_input
 import numpy as np
 import time
 import io
+import os
 import joblib
 import pandas as pd
 import av
